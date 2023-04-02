@@ -1,5 +1,5 @@
 //Filename: driver.cpp
-//Authors: Ishan Parikh, Bryan
+//Authors: Ishan Parikh, Bryan Duong
 //Date 4-1-23
 //CPSC 5300
 //Purpose: SQL statement parser impelementation in C++
@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib> 
 #include <string>
+#include <stdlib.h>
 #include "db_cxx.h"
 #include "SQLParser.h"
 #include "SQLParserResult.h"
@@ -41,19 +42,29 @@ int main(int argc, char* argv[]) {
     const string EXIT_RESPONSE = "quit";
     string statementInput = "";
     while(statementInput != EXIT_RESPONSE) {
-        
         cout << "SQL> ";
         cin >> statementInput;
         hsql::SQLParserResult* result = nullptr;
         if(statementInput != EXIT_RESPONSE) {
+	    result = parseSQLString(statementInput);
+	    if(isValid(result))
+	    {
+		cout << execute(result);
+	    }
             //include logic here to handle
-        }
+        } else {
+	    exit(EXIT_FAILURE);
+	}
+	delete result;
     } 
     return 0;
 }
 
-
 string execute(hsql::SQLParserResult* result) {
+    for(int i = 0; i < sizeof(result) / sizeof(int); i++)
+    {
+	 
+    }
     //handle logic etc...
     return "";
 }
